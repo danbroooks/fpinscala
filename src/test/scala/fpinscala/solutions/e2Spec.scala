@@ -53,4 +53,15 @@ class e2Spec extends FreeSpec with Matchers {
       fib(11) should be (89)
     }
   }
+
+  "isSorted" - {
+    "checks whether an Array[A] is sorted according to a given compare function" in {
+      isSorted(Array(1, 2, 3), (a: Int, b: Int) => a < b) should be(true)
+      isSorted(Array(3, 2, 1), (a: Int, b: Int) => a < b) should be(false)
+
+      isSorted(Array(("Dan", 27), ("Mike", 30), ("Alan", 32)), (a: (String, Int), b: (String, Int)) => a._2 < b._2) should be(true)
+
+      isSorted(Array("Alan", "Dan", "Mike"), (a: String, b: String) => a < b) should be(true)
+    }
+  }
 }
