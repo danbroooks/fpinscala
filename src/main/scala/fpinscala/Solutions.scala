@@ -1,5 +1,0 @@
-package fpinscala
-
-object Solutions {
-
-}
