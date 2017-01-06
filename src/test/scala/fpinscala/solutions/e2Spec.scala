@@ -68,7 +68,11 @@ class e2Spec extends FreeSpec with Matchers {
 
   "curry" - {
     val uncurried = (num: Int, bool: Boolean) => s"number is $num and boolean is $bool"
-
     curry(uncurried)(18)(true) should be("number is 18 and boolean is true")
+  }
+
+  "uncurry" - {
+    val curried = (num: Int) => (bool: Boolean) => s"number is $num and boolean is $bool"
+    uncurry(curried)(18, true) should be("number is 18 and boolean is true")
   }
 }
