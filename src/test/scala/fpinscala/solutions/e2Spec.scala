@@ -75,4 +75,10 @@ class e2Spec extends FreeSpec with Matchers {
     val curried = (num: Int) => (bool: Boolean) => s"number is $num and boolean is $bool"
     uncurry(curried)(18, true) should be("number is 18 and boolean is true")
   }
+
+  "compose" - {
+    val first = (name: String) => s"Hello, $name"
+    val second = (str: String) => s"$str! Welcome."
+    compose(first, second)("Dan") should be("Hello, Dan! Welcome.")
+  }
 }
