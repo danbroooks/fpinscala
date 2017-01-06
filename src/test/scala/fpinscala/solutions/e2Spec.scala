@@ -65,4 +65,10 @@ class e2Spec extends FreeSpec with Matchers {
       isSorted(Array("Alan", "Dan", "Mike"), (a: String, b: String) => a < b) should be(true)
     }
   }
+
+  "curry" - {
+    val uncurried = (num: Int, bool: Boolean) => s"number is $num and boolean is $bool"
+
+    curry(uncurried)(18)(true) should be("number is 18 and boolean is true")
+  }
 }

@@ -14,5 +14,8 @@ object e2 {
     if (as.length < 2) true
     else ordered(as.head, as.tail.head) && isSorted(as.tail, ordered)
   }
+
+  def curry[A, B, C](f: (A, B) => C): A => (B => C) =
+    (a: A) => (b: B) => f(a, b)
 }
 
