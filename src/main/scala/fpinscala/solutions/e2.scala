@@ -1,15 +1,12 @@
 package fpinscala.solutions
 
 object e2 {
-  def fib(n: Int) : Int = {
 
-    @annotation.tailrec
-    def fibonacci(n: Int, prev: Int, acc: Int): Int = {
-      if (n == 0) prev
-      else fibonacci(n - 1, acc, acc + prev)
-    }
-
-    fibonacci(n, 0, 1)
+  @annotation.tailrec
+  def fib(n: Int, prev: Int = 0, acc: Int = 1): Int = n match {
+    case 0 => n
+    case 1 => acc
+    case _ => fib(n - 1, acc, acc + prev)
   }
 
   @annotation.tailrec
