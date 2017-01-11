@@ -39,4 +39,11 @@ class e3Spec extends FreeSpec with Matchers {
       dropWhile(numbers, (n: Int) => n < 4) should be (List(4, 5))
     }
   }
+
+  "init" - {
+    "should drop the last element in the list" in {
+      init(numbers) should be (List(1, 2, 3, 4))
+      init(init(numbers)) should be (List(1, 2, 3))
+    }
+  }
 }

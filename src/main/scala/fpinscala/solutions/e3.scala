@@ -15,12 +15,12 @@ object e3 {
   }
 
   def tail[A](ls: List[A]): List[A] = ls match {
-    case Nil => sys.error("tail of empty list")
+    case Nil => sys.error("Cannot apply to empty list")
     case Cons(_, tl) => tl
   }
 
   def setHead[A](hd: A, ls: List[A]): List[A] = ls match {
-    case Nil => sys.error("setHead on empty list")
+    case Nil => sys.error("setCannot apply to empty list")
     case Cons(_, tl) => Cons(hd, tl)
   }
 
@@ -34,5 +34,11 @@ object e3 {
   def dropWhile[A](ls: List[A], f: A => Boolean): List[A] = ls match {
     case Nil => Nil
     case Cons(hd, tl) => if (f(hd)) dropWhile(tl, f) else ls
+  }
+
+  def init[A](ls: List[A]): List[A] = ls match {
+    case Nil => sys.error("Cannot apply to empty list")
+    case Cons(_, Nil) => Nil
+    case Cons(hd, tl) => Cons(hd, init(tl))
   }
 }
