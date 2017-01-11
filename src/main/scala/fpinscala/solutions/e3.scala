@@ -15,18 +15,21 @@ object e3 {
   }
 
   def tail[A](ls: List[A]): List[A] = ls match {
-    case Nil => Nil
+    case Nil => sys.error("tail of empty list")
     case Cons(_, tl) => tl
   }
 
   def setHead[A](hd: A, ls: List[A]): List[A] = ls match {
-    case Nil => Cons(hd, Nil)
+    case Nil => sys.error("setHead on empty list")
     case Cons(_, tl) => Cons(hd, tl)
   }
 
   def drop[A](ls: List[A], n: Int): List[A] =
     if (n <= 0) ls
-    else drop(tail(ls), n - 1)
+    else ls match {
+      case Nil => Nil
+      case Cons(_, tl) => drop(tl, n - 1)
+    }
 
   def dropWhile[A](ls: List[A], f: A => Boolean): List[A] = ls match {
     case Nil => Nil
