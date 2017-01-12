@@ -1,5 +1,6 @@
 package fpinscala.solutions
 
+import annotation.tailrec
 import util.e3._
 
 object e3 {
@@ -41,4 +42,35 @@ object e3 {
     case Cons(_, Nil) => Nil
     case Cons(hd, tl) => Cons(hd, init(tl))
   }
+
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil => z
+    case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+  }
+
+  @tailrec def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+    case Nil => z
+    case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+  }
+
+  def sum(ns: List[Int]) =
+    foldRight(ns, 0)(_ + _)
+
+  def product(ns: List[Int]) =
+    foldRight(ns, 1.0)(_ * _)
+
+  def count[A](as: List[A]): Int =
+    foldRight(as, 0)((_, n) => n + 1)
+
+  def sumLeft(ns: List[Int]) =
+    foldLeft(ns, 0)(_ + _)
+
+  def productLeft(ns: List[Int]) =
+    foldLeft(ns, 1.0)(_ * _)
+
+  def countLeft(ns: List[Int]) =
+    foldLeft(ns, 0)((n, _) => n + 1)
+
+  def reverse(ns: List[Int]) =
+    foldLeft(ns, Nil: List[Int])((xs, x) => Cons(x, xs))
 }

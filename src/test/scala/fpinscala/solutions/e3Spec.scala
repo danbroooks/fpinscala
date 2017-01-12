@@ -46,4 +46,42 @@ class e3Spec extends FreeSpec with Matchers {
       init(init(numbers)) should be (List(1, 2, 3))
     }
   }
+
+  "sum" - {
+    "should sum all the numbers" in {
+      sum(numbers) should be (15)
+    }
+  }
+
+  "product" - {
+    "should get the product of all the numbers" in {
+      product(numbers) should be (120)
+    }
+  }
+
+  "count" - {
+    "should return the number of elements in the list" in {
+      count(numbers) should be (5)
+    }
+  }
+
+  "foldLeft" - {
+    "should implement sum" in {
+      sumLeft(numbers) should be (15)
+    }
+
+    "should implement product" in {
+      productLeft(numbers) should be (120)
+    }
+
+    "should implement count" in {
+      countLeft(numbers) should be (5)
+    }
+  }
+
+  "reverse" - {
+    "should reverse the list" in {
+      reverse(numbers) should be (List(5, 4, 3, 2, 1))
+    }
+  }
 }
