@@ -81,10 +81,10 @@ object e3 {
     foldRight(lists, List[A]())(append)
 
   def increment(numbers: List[Int]): List[Int] =
-    foldRight(numbers, List[Int]())((x, xs) => Cons(x + 1, xs))
+    map(numbers)(_ + 1)
 
   def doublesToStrings(dubs: List[Double]): List[String] =
-    foldRight(dubs, List[String]())((x, xs) => Cons(x.toString, xs))
+    map(dubs)(_.toString)
 
   def map[A, B](as: List[A])(f: A => B): List[B] =
     foldRight(as, List[B]())((x, xs) => Cons(f(x), xs))
