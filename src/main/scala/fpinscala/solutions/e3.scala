@@ -45,7 +45,7 @@ object e3 {
 
   def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
     case Nil => z
-    case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    case Cons(x, xs) => foldLeft(reverse(as), z)((b, a) => f(a, b))
   }
 
   @tailrec def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
@@ -71,6 +71,6 @@ object e3 {
   def countLeft(ns: List[Int]) =
     foldLeft(ns, 0)((n, _) => n + 1)
 
-  def reverse(ns: List[Int]) =
-    foldLeft(ns, Nil: List[Int])((xs, x) => Cons(x, xs))
+  def reverse[A](ns: List[A]) =
+    foldLeft(ns, Nil: List[A])((xs, x) => Cons(x, xs))
 }

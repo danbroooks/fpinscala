@@ -47,6 +47,18 @@ class e3Spec extends FreeSpec with Matchers {
     }
   }
 
+  "foldRight" - {
+    "should fold right" in {
+      foldRight(numbers, 0)(_ - _) should be (3)
+    }
+  }
+
+  "foldLeft" - {
+    "should fold left" in {
+      foldLeft(numbers, 0)(_ - _) should be (-15)
+    }
+  }
+
   "sum" - {
     "should sum all the numbers" in {
       sum(numbers) should be (15)
