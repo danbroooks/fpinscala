@@ -53,24 +53,24 @@ object e3 {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
-  def sum(ns: List[Int]) =
+  def sum(ns: List[Int]): Int =
     foldRight(ns, 0)(_ + _)
 
-  def product(ns: List[Int]) =
+  def product(ns: List[Int]): Double =
     foldRight(ns, 1.0)(_ * _)
 
   def count[A](as: List[A]): Int =
     foldRight(as, 0)((_, n) => n + 1)
 
-  def sumLeft(ns: List[Int]) =
+  def sumLeft(ns: List[Int]): Int =
     foldLeft(ns, 0)(_ + _)
 
-  def productLeft(ns: List[Int]) =
+  def productLeft(ns: List[Int]): Double =
     foldLeft(ns, 1.0)(_ * _)
 
-  def countLeft(ns: List[Int]) =
+  def countLeft(ns: List[Int]): Int =
     foldLeft(ns, 0)((n, _) => n + 1)
 
-  def reverse[A](ns: List[A]) =
+  def reverse[A](ns: List[A]): List[A] =
     foldLeft(ns, Nil: List[A])((xs, x) => Cons(x, xs))
 }
