@@ -126,4 +126,16 @@ class e3Spec extends FreeSpec with Matchers {
       map(numbers)(_ * 2) should be (List(2, 4, 6, 8, 10))
     }
   }
+
+  "filter" - {
+    "should filter items from a list that do not match predicate" in {
+      filter(numbers)(_ % 2 == 0) should be (List(2, 4))
+    }
+  }
+
+  "flatMap" - {
+    "should map over items in list, returning new list but merging into flattened list" in {
+      flatMap(List(1, 2, 3))(i => List(i, i)) should be (List(1, 1, 2, 2, 3, 3))
+    }
+  }
 }

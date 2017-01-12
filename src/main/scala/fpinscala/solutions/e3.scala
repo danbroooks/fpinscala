@@ -88,4 +88,10 @@ object e3 {
 
   def map[A, B](as: List[A])(f: A => B): List[B] =
     foldRight(as, List[B]())((x, xs) => Cons(f(x), xs))
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
+    flatMap(as)(a => if (f(a)) List(a) else Nil)
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
+    flatten(map(as)(f))
 }
