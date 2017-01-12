@@ -73,4 +73,19 @@ object e3 {
 
   def reverse[A](ns: List[A]): List[A] =
     foldLeft(ns, Nil: List[A])((xs, x) => Cons(x, xs))
+
+  def append[A](a1: List[A], a2: List[A]): List[A] =
+    foldRight(a1, a2)(Cons(_, _))
+
+  def flatten[A](lists: List[List[A]]): List[A] =
+    foldRight(lists, List[A]())(append)
+
+  def increment(numbers: List[Int]): List[Int] =
+    foldRight(numbers, List[Int]())((x, xs) => Cons(x + 1, xs))
+
+  def doublesToStrings(dubs: List[Double]): List[String] =
+    foldRight(dubs, List[String]())((x, xs) => Cons(x.toString, xs))
+
+  def map[A, B](as: List[A])(f: A => B): List[B] =
+    foldRight(as, List[B]())((x, xs) => Cons(f(x), xs))
 }

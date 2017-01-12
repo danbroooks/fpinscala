@@ -96,4 +96,34 @@ class e3Spec extends FreeSpec with Matchers {
       reverse(numbers) should be (List(5, 4, 3, 2, 1))
     }
   }
+
+  "append" - {
+    "should append a list to another list" in {
+      append(numbers, List(6, 7, 8)) should be (List(1, 2, 3, 4, 5, 6, 7, 8))
+    }
+  }
+
+  "flatten" - {
+    "should flatten a list of lists" in {
+      flatten(List(numbers, numbers, List(4, 3, 2, 1))) should be (List(1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 4, 3, 2, 1))
+    }
+  }
+
+  "increment" - {
+    "should increment the numbers" in {
+      increment(numbers) should be (List(2, 3, 4, 5, 6))
+    }
+  }
+
+  "doublesToStrings" - {
+    "should convert a list of doubles to a list of strings" in {
+      doublesToStrings(List(1.3, 3.4)) should be (List("1.3", "3.4"))
+    }
+  }
+
+  "map" - {
+    "should map over items in list in place returning transformed list" in {
+      map(numbers)(_ * 2) should be (List(2, 4, 6, 8, 10))
+    }
+  }
 }
