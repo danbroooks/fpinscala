@@ -138,4 +138,11 @@ class e3Spec extends FreeSpec with Matchers {
       flatMap(List(1, 2, 3))(i => List(i, i)) should be (List(1, 1, 2, 2, 3, 3))
     }
   }
+
+  "combine" - {
+    "should combine items from two lists to make a single list" in {
+      combine(List(1, 2, 3), List(4, 5, 6)) should be (List(5, 7, 9))
+      combine(List(1, 2, 3), numbers) should be (List(2, 4, 6, 4, 5))
+    }
+  }
 }
