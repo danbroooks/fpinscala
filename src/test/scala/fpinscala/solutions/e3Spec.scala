@@ -145,4 +145,13 @@ class e3Spec extends FreeSpec with Matchers {
       combine(List(1, 2, 3), numbers) should be (List(2, 4, 6, 4, 5))
     }
   }
+
+  "zipWith" - {
+    "should combine using provided function" in {
+      val firstNames = List("Martin", "Paul", "Runar")
+      val lastNames = List("Odersky", "Chiusano", "Bjarnason")
+
+      zipWith(firstNames, lastNames)((first, last) => s"$first $last") should be (List("Martin Odersky", "Paul Chiusano", "Runar Bjarnason"))
+    }
+  }
 }

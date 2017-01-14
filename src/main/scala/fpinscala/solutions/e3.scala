@@ -95,9 +95,12 @@ object e3 {
   def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
     flatten(map(as)(f))
 
-  def combine(a1: List[Int], a2: List[Int]): List[Int] = (a1, a2) match {
+  def combine(as: List[Int], bs: List[Int]): List[Int] =
+    zipWith(as, bs)((a: Int, b: Int) => a + b)
+
+  def zipWith[A](a: List[A], b: List[A])(f: (A, A) => A): List[A] = (a, b) match {
     case (Nil, as) => as
     case (as, Nil) => as
-    case (Cons(x, xs), Cons(y, ys)) => Cons(x + y, combine(xs, ys))
+    case (Cons(x, xs), Cons(y, ys)) => Cons(f(x, y), zipWith(xs, ys)(f))
   }
 }
