@@ -105,10 +105,9 @@ object e3 {
   }
 
   @tailrec def startsWith[A](list: List[A], check: List[A]): Boolean = (list, check) match {
-    case (Nil, _) => false
     case (_, Nil) => true
-    case (Cons(x, Nil), Cons(y, Nil)) => (x == y)
     case (Cons(x, xs), Cons(y, ys)) => (x == y) && startsWith(xs, ys)
+    case _ => false
   }
 
   @tailrec def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
