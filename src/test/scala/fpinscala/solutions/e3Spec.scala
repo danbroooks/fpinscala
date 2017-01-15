@@ -155,6 +155,32 @@ class e3Spec extends FreeSpec with Matchers {
     }
   }
 
+  "startsWith" - {
+    "should return true for list [1,2,3,4] starting with [1]" in {
+      startsWith(List(1,2,3,4), List(1)) should be (true)
+    }
+
+    "should return true for list [1,2,3,4] starting with [1,2]" in {
+      startsWith(List(1,2,3,4), List(1,2)) should be (true)
+    }
+
+    "should return true for list [1,2,3,4] starting with [1,2,3]" in {
+      startsWith(List(1,2,3,4), List(1,2,3)) should be (true)
+    }
+
+    "should return true for list [1,2,3,4] starting with [1,2,3,4]" in {
+      startsWith(List(1,2,3,4), List(1,2,3,4)) should be (true)
+    }
+
+    "should return false for list [1,2,3,4] starting with [1,2,3,4,5]" in {
+      startsWith(List(1,2,3,4), List(1,2,3,4,5)) should be (false)
+    }
+
+    "should return false for list [1,2,3,4] starting with [2,3,4]" in {
+      startsWith(List(1,2,3,4), List(2,3,4)) should be (false)
+    }
+  }
+
   "hasSubsequence" - {
     "should return true for list [1, 2, 3, 4] containing subsequence [1, 2]" in {
       hasSubsequence(List(1, 2, 3, 4), List(1, 2)) should be (true)

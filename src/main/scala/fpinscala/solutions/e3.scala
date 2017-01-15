@@ -104,14 +104,14 @@ object e3 {
     case (Cons(x, xs), Cons(y, ys)) => Cons(f(x, y), zipWith(xs, ys)(f))
   }
 
-  @tailrec def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
-    @tailrec def startsWith(list: List[A], check: List[A]): Boolean = (list, check) match {
-      case (Nil, _) => false
-      case (_, Nil) => true
-      case (Cons(x, Nil), Cons(y, Nil)) => (x == y)
-      case (Cons(x, xs), Cons(y, ys)) => (x == y) && startsWith(xs, ys)
-    }
+  @tailrec def startsWith[A](list: List[A], check: List[A]): Boolean = (list, check) match {
+    case (Nil, _) => false
+    case (_, Nil) => true
+    case (Cons(x, Nil), Cons(y, Nil)) => (x == y)
+    case (Cons(x, xs), Cons(y, ys)) => (x == y) && startsWith(xs, ys)
+  }
 
+  @tailrec def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
     if (startsWith(sup, sub)) true
     else sup match {
       case Nil => false
