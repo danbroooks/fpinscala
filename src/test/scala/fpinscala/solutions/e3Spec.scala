@@ -154,4 +154,30 @@ class e3Spec extends FreeSpec with Matchers {
       zipWith(firstNames, lastNames)((first, last) => s"$first $last") should be (List("Martin Odersky", "Paul Chiusano", "Runar Bjarnason"))
     }
   }
+
+  "hasSubsequence" - {
+    "should return true for list [1, 2, 3, 4] containing subsequence [1, 2]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(1, 2)) should be (true)
+    }
+
+    "should return true for list [1, 2, 3, 4] containing subsequence [2, 3]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(2, 3)) should be (true)
+    }
+
+    "should return true for list [1, 2, 3, 4] containing subsequence [4]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(4)) should be (true)
+    }
+
+    "should return false for list [1, 2, 3, 4] containing subsequence [3, 1]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(3, 1)) should be (false)
+    }
+
+    "should return false for list [1, 2, 3, 4] containing subsequence [5]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(5)) should be (false)
+    }
+
+    "should return false for list [1, 2, 3, 4] containing subsequence [6, 4]" in {
+      hasSubsequence(List(1, 2, 3, 4), List(6, 4)) should be (false)
+    }
+  }
 }
