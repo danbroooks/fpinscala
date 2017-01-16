@@ -206,4 +206,36 @@ class e3Spec extends FreeSpec with Matchers {
       hasSubsequence(List(1, 2, 3, 4), List(6, 4)) should be (false)
     }
   }
+
+  "size" - {
+    "should return 1 for single leaf" in {
+      treesize(Leaf(1)) should be (1)
+    }
+
+    "should return 3 for branch with two leaves" in {
+      treesize(Branch(Leaf(1), Leaf(2))) should be (3)
+    }
+
+    "should return 5 for a branch with one nested branch and one right leaf" in {
+      treesize(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) should be (5)
+    }
+  }
+
+  "maximum" - {
+    "should return the maximum element in tree" in {
+      maximum(Leaf(1)) should be (1)
+      maximum(Branch(Leaf(1), Leaf(2))) should be (2)
+      maximum(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) should be (3)
+      maximum(Branch(Branch(Leaf(7), Leaf(2)), Leaf(3))) should be (7)
+    }
+  }
+
+  "depth" - {
+    "should return the depth of a tree" in {
+      depth(Leaf(1)) should be (1)
+      depth(Branch(Leaf(1), Leaf(2))) should be (2)
+      depth(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) should be (3)
+      depth(Branch(Branch(Branch(Branch(Leaf(7), Leaf(2)), Leaf(2)), Leaf(2)), Leaf(3))) should be (5)
+    }
+  }
 }

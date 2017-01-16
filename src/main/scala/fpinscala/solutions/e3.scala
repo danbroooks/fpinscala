@@ -117,4 +117,19 @@ object e3 {
       case Cons(_, xs) => hasSubsequence(xs, sub)
     }
   }
+
+  def treesize[T](t: Tree[T]): Int = t match {
+    case Leaf(_) => 1
+    case Branch(left, right) => 1 + treesize(left) + treesize(right)
+  }
+
+  def maximum(t: Tree[Int]): Int = t match {
+    case Leaf(value) => value
+    case Branch(left, right) => maximum(left) max maximum(right)
+  }
+
+  def depth[T](t: Tree[T]): Int = t match {
+    case Leaf(_) => 1
+    case Branch(left, right) => 1 + depth(left) max depth(right)
+  }
 }
