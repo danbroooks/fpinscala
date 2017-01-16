@@ -121,19 +121,21 @@ object e3 {
   }
 
   object tree {
-    def size[T](t: Tree[T]): Int = t match {
-      case Leaf(_) => 1
-      case Branch(left, right) => 1 + size(left) + size(right)
-    }
+    def size[T](t: Tree[T]): Int =
+      fold(t)(_ => 1)((l, r) => 1 + l + r)
 
-    def maximum(t: Tree[Int]): Int = t match {
-      case Leaf(value) => value
-      case Branch(left, right) => maximum(left) max maximum(right)
-    }
+    def maximum(t: Tree[Int]): Int =
+      fold(t)(i => i)(_ max _)
 
-    def depth[T](t: Tree[T]): Int = t match {
-      case Leaf(_) => 1
-      case Branch(left, right) => 1 + depth(left) max depth(right)
+    def depth[T](t: Tree[T]): Int =
+      fold(t)(_ => 0)((l, r) => 1 + (l max r))
+
+    def map[A, B](t: Tree[A])(f: A => B): Tree[B] =
+      fold(t)(v => Leaf(f(v)): Tree[B])(Branch(_, _))
+
+    def fold[A, B](t: Tree[A])(l: A => B)(b: (B, B) => B): B = t match {
+      case Leaf(value) => l(value)
+      case Branch(left, right) => b(fold(left)(l)(b), fold(right)(l)(b))
     }
   }
 }

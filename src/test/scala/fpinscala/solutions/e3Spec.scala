@@ -235,10 +235,22 @@ class e3Spec extends FreeSpec with Matchers {
 
     "depth" - {
       "should return the depth of a tree" in {
-        tree.depth(Leaf(1)) should be (1)
-        tree.depth(Branch(Leaf(1), Leaf(2))) should be (2)
-        tree.depth(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) should be (3)
-        tree.depth(Branch(Branch(Branch(Branch(Leaf(7), Leaf(2)), Leaf(2)), Leaf(2)), Leaf(3))) should be (5)
+        tree.depth(Leaf(1)) should be (0)
+        tree.depth(Branch(Leaf(1), Leaf(2))) should be (1)
+        tree.depth(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) should be (2)
+        tree.depth(Branch(Branch(Branch(Branch(Leaf(7), Leaf(2)), Leaf(2)), Leaf(2)), Leaf(3))) should be (4)
+      }
+    }
+
+    "map" - {
+      "should apply f to all values in the tree" in {
+        tree.map(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)))(_ + 1) should be (Branch(Branch(Leaf(2), Leaf(3)), Leaf(4)))
+      }
+    }
+
+    "fold" - {
+      "should fold over all the items in the tree" in {
+        tree.fold(Leaf(1))((a: Int) => a)(_ + _) should be (1)
       }
     }
   }
