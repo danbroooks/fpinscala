@@ -94,4 +94,14 @@ class e4Spec extends FreeSpec with Matchers {
       map2(Some(5), Some(5))(sum) should be (Some(10))
     }
   }
+
+  "sequence" - {
+    "returns list of numbers wrapped in Some, when no None is present" in {
+      sequence(List(Some(1), Some(3), Some(5))) should be (Some(List(1, 3, 5)))
+    }
+
+    "returns None if single None is present in list" in {
+      sequence(List(Some(1), Some(3), None, Some(5))) should be (None)
+    }
+  }
 }
