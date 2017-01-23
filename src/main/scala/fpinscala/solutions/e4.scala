@@ -13,8 +13,6 @@ object e4 {
     if (xs.isEmpty) None
     else Some(xs.sum / xs.length)
 
-  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
-    case (Some(av), Some(bv)) => Some(f(av, bv))
-    case _ => None
-  }
+  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    a.flatMap(av => b.map(bv => f(av, bv)))
 }
