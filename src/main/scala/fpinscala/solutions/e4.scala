@@ -18,8 +18,5 @@ object e4 {
     a.flatMap(av => b.map(bv => f(av, bv)))
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
-    a.foldRight(Some(List()): Option[List[A]])((hd, tl) => (hd, tl) match {
-      case (Some(x), Some(xs)) => Some(x :: xs)
-      case _ => None
-    })
+    a.foldRight(Some(List()): Option[List[A]])((hd, tl) => map2(hd, tl)(_ :: _))
 }
