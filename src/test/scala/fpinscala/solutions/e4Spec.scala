@@ -81,4 +81,17 @@ class e4Spec extends FreeSpec with Matchers {
       variance(Seq(20, 18, 16, 14)) should be (Some(5.0))
     }
   }
+
+  "map2" - {
+    val sum = (a: Int, b: Int) => a + b
+
+    "should map to none if either argument is None" in {
+      map2(Some(5), None)(sum) should be (None)
+      map2(None, Some(3))(sum) should be (None)
+    }
+
+    "should map the values to single option if both are present" in {
+      map2(Some(5), Some(5))(sum) should be (Some(10))
+    }
+  }
 }
