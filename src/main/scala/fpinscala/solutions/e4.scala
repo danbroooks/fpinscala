@@ -18,7 +18,7 @@ object e4 {
     a.flatMap(av => b.map(bv => f(av, bv)))
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
-    a.foldRight(Some(List()): Option[List[A]])((hd, tl) => map2(hd, tl)(_ :: _))
+    traverse(a)(x => x)
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
     a.foldRight(Some(List()): Option[List[B]])((hd, tl) => map2(f(hd), tl)(_ :: _))
