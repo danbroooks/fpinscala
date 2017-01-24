@@ -107,11 +107,11 @@ class e4Spec extends FreeSpec with Matchers {
 
   "traverse" - {
     "should return None if some values fail to be parsed" in {
-      traverse(List("22", "hello", "world", "49"))(str => Try(str.toInt)) should be (None)
+      traverse(List("22", "hello", "world", "49"))(str => Option.Try(str.toInt)) should be (None)
     }
 
     "should return a Some of the list of successful values if all values succeeded" in {
-      traverse(List("22", "49"))(str => Try(str.toInt)) should be (Some(List(22, 49)))
+      traverse(List("22", "49"))(str => Option.Try(str.toInt)) should be (Some(List(22, 49)))
     }
   }
 }

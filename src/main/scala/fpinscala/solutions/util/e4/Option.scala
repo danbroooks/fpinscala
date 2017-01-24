@@ -21,11 +21,11 @@ sealed trait Option[+A] {
     flatMap(get => if (f(get)) Some(get) else None)
 }
 
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
-
-object Try {
-  def apply[A](a: => A): Option[A] =
+object Option {
+  def Try[A](a: => A): Option[A] =
     try Some(a)
     catch { case e: Exception => None }
 }
+
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
