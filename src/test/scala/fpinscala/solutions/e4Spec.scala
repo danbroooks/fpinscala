@@ -52,6 +52,67 @@ class e4Spec extends FreeSpec with Matchers {
         Some(4).filter(_ < 3) should be (None)
       }
     }
+
+    "map2" - {
+      val sum = (a: Int, b: Int) => a + b
+
+      "should map to none if either argument is None" in {
+        Some(5).map2(None)(sum) should be (None)
+        None.map2(Some(3))(sum) should be (None)
+      }
+
+      "should map the values to single option if both are present" in {
+        Some(5).map2(Some(5))(sum) should be (Some(10))
+      }
+    }
+  }
+
+  "either" - {
+    "map" - {
+      val toInt = (n: String) => n.toInt
+      "should map values from one type to another" in {
+        Right("7").map(toInt) should be (Right(7))
+      }
+
+      "should leave left values as they are" in {
+        Left("Something went wrong").map(toInt) should be (Left("Something went wrong"))
+      }
+    }
+
+    "flatMap" - {
+      val inc = (n: Int) => Right(n + 1)
+
+      "should map over value when either is Right" in {
+        Right(4).flatMap(inc) should be (Right(5))
+      }
+
+      "should perform no-op when either is Left" in {
+        Left("Something went wrong").flatMap(inc) should be (Left("Something went wrong"))
+      }
+    }
+
+    "orElse" - {
+      "should return Right when either is Right" in {
+        Right(4).orElse(Right(7)) should be (Right(4))
+      }
+
+      "should return provided fallback when either is Left" in {
+        Left("Something went wrong").orElse(Right(7)) should be (Right(7))
+      }
+    }
+
+    "map2" - {
+      val sum = (a: Int, b: Int) => a + b
+
+      "should map to Left if either argument is Left" in {
+        Right(7).map2(Left("err"))(sum) should be (Left("err"))
+        Left("err").map2(Right(7))(sum) should be (Left("err"))
+      }
+
+      "should map to Right if both eithers are Right" in {
+        Right(5).map2(Right(5))(sum) should be (Right(10))
+      }
+    }
   }
 
   "mean" - {
@@ -79,19 +140,6 @@ class e4Spec extends FreeSpec with Matchers {
 
     "should calculate the variance of a Seq(20, 18, 16, 14)" in {
       variance(Seq(20, 18, 16, 14)) should be (Some(5.0))
-    }
-  }
-
-  "map2" - {
-    val sum = (a: Int, b: Int) => a + b
-
-    "should map to none if either argument is None" in {
-      map2(Some(5), None)(sum) should be (None)
-      map2(None, Some(3))(sum) should be (None)
-    }
-
-    "should map the values to single option if both are present" in {
-      map2(Some(5), Some(5))(sum) should be (Some(10))
     }
   }
 

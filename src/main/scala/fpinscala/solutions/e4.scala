@@ -14,12 +14,9 @@ object e4 {
     if (xs.isEmpty) None
     else Some(xs.sum / xs.length)
 
-  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
-    a.flatMap(av => b.map(bv => f(av, bv)))
-
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
     traverse(a)(x => x)
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
-    a.foldRight(Some(List()): Option[List[B]])((hd, tl) => map2(f(hd), tl)(_ :: _))
+    a.foldRight(Some(List()): Option[List[B]])((hd, tl) => f(hd).map2(tl)(_ :: _))
 }
