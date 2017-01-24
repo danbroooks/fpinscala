@@ -23,3 +23,9 @@ sealed trait Option[+A] {
 
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
+
+object Try {
+  def apply[A](a: => A): Option[A] =
+    try Some(a)
+    catch { case e: Exception => None }
+}

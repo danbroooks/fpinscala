@@ -19,4 +19,7 @@ object e4 {
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
     a.foldRight(Some(List()): Option[List[A]])((hd, tl) => map2(hd, tl)(_ :: _))
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    sequence(a map (i => f(i)))
 }

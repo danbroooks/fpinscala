@@ -104,4 +104,14 @@ class e4Spec extends FreeSpec with Matchers {
       sequence(List(Some(1), Some(3), None, Some(5))) should be (None)
     }
   }
+
+  "traverse" - {
+    "should return None if some values fail to be parsed" in {
+      traverse(List("22", "hello", "world", "49"))(str => Try(str.toInt)) should be (None)
+    }
+
+    "should return a Some of the list of successful values if all values succeeded" in {
+      traverse(List("22", "49"))(str => Try(str.toInt)) should be (Some(List(22, 49)))
+    }
+  }
 }
