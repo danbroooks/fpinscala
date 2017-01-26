@@ -16,8 +16,8 @@ sealed trait Either[+E, +A] {
     case Left(_) => b
   }
 
-  def map2[EE >: E, B, C](be: Either[EE, B])(f: (A, B) => C): Either[EE, C] =
-    flatMap(a => be.map(b => f(a, b)))
+  def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] =
+    for { aa <- this; bb <- b } yield f(aa, bb)
 }
 
 object Either {
