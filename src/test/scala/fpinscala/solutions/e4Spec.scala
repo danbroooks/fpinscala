@@ -65,6 +65,26 @@ class e4Spec extends FreeSpec with Matchers {
         Some(5).map2(Some(5))(sum) should be (Some(10))
       }
     }
+
+    "sequence" - {
+      "returns list of numbers wrapped in Some, when no None is present" in {
+        Option.sequence(List(Some(1), Some(3), Some(5))) should be (Some(List(1, 3, 5)))
+      }
+
+      "returns None if single None is present in list" in {
+        Option.sequence(List(Some(1), Some(3), None, Some(5))) should be (None)
+      }
+    }
+
+    "traverse" - {
+      "should return None if some values fail to be parsed" in {
+        Option.traverse(List("22", "hello", "world", "49"))(str => Option.Try(str.toInt)) should be (None)
+      }
+
+      "should return a Some of the list of successful values if all values succeeded" in {
+        Option.traverse(List("22", "49"))(str => Option.Try(str.toInt)) should be (Some(List(22, 49)))
+      }
+    }
   }
 
   "either" - {
@@ -113,6 +133,30 @@ class e4Spec extends FreeSpec with Matchers {
         Right(5).map2(Right(5))(sum) should be (Right(10))
       }
     }
+
+    "sequence" - {
+      "returns list of numbers wrapped in Right, when no Left is present" in {
+        Either.sequence(List(Right(1), Right(3), Right(5))) should be (Right(List(1, 3, 5)))
+      }
+
+      "returns first Left if found in list" in {
+        val e = new Exception("error!")
+        Either.sequence(List(Right(1), Right(3), Left(e), Right(5))) should be (Left(e))
+      }
+    }
+
+    "traverse" - {
+      "should return None if some values fail to be parsed" in {
+        Either.traverse(List("22", "hello", "world", "49"))(str => Either.Try(str.toInt)) match {
+          case Left(e) => e should have message ("For input string: \"hello\"")
+          case _ => fail
+        }
+      }
+
+      "should return a Some of the list of successful values if all values succeeded" in {
+        Either.traverse(List("22", "49"))(str => Either.Try(str.toInt)) should be (Right(List(22, 49)))
+      }
+    }
   }
 
   "mean" - {
@@ -140,26 +184,6 @@ class e4Spec extends FreeSpec with Matchers {
 
     "should calculate the variance of a Seq(20, 18, 16, 14)" in {
       variance(Seq(20, 18, 16, 14)) should be (Some(5.0))
-    }
-  }
-
-  "sequence" - {
-    "returns list of numbers wrapped in Some, when no None is present" in {
-      sequence(List(Some(1), Some(3), Some(5))) should be (Some(List(1, 3, 5)))
-    }
-
-    "returns None if single None is present in list" in {
-      sequence(List(Some(1), Some(3), None, Some(5))) should be (None)
-    }
-  }
-
-  "traverse" - {
-    "should return None if some values fail to be parsed" in {
-      traverse(List("22", "hello", "world", "49"))(str => Option.Try(str.toInt)) should be (None)
-    }
-
-    "should return a Some of the list of successful values if all values succeeded" in {
-      traverse(List("22", "49"))(str => Option.Try(str.toInt)) should be (Some(List(22, 49)))
     }
   }
 }

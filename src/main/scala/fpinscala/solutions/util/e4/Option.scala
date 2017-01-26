@@ -28,6 +28,12 @@ object Option {
   def Try[A](a: => A): Option[A] =
     try Some(a)
     catch { case e: Exception => None }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    traverse(a)(x => x)
+
+  def traverse[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
+    as.foldRight(Some(List()): Option[List[B]])((hd, tl) => f(hd).map2(tl)(_ :: _))
 }
 
 case class Some[+A](get: A) extends Option[A]
