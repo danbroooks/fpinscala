@@ -46,5 +46,15 @@ class e5Spec extends FreeSpec with Matchers {
         (Stream(): Stream[Int]).takeWhile(_ < 3).toList should be (List())
       }
     }
+
+    "forAll" - {
+      "returns true when predicate is true for all values" in {
+        Stream(1, 2, 3, 4).forAll(_ < 5) should be (true)
+      }
+
+      "returns fals when predicate is not true for all values" in {
+        Stream(1, 2, 3, 4).forAll(_ == 1) should be (false)
+      }
+    }
   }
 }

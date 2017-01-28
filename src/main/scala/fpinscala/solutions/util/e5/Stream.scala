@@ -20,11 +20,18 @@ sealed trait Stream[+A] {
     case _ => this
   }
 
-  def takeWhile(p: A => Boolean): Stream[A] = this match {
-    case Cons(h, t) =>
-      if (p(h())) cons(h(), t().takeWhile(p))
+  def takeWhile(p: A => Boolean): Stream[A] =
+    foldRight(empty[A])((h, t) => {
+      if (p(h)) cons(h, t)
       else empty
-    case _ => this
+    })
+
+  def forAll(p: A => Boolean): Boolean =
+    foldRight(true)((h, t) => (p(h)) && t)
+
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
   }
 }
 
