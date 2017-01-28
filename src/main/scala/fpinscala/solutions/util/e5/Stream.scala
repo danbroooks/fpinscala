@@ -1,6 +1,33 @@
 package fpinscala.solutions.util.e5
 
-sealed trait Stream[+A]
+import Stream._
+
+sealed trait Stream[+A] {
+  def toList: List[A] = this match {
+    case Empty => Nil
+    case Cons(h, t) => List(h()) ++ t().toList
+  }
+
+  def take(n: Int): Stream[A] = {
+    if (n > 0) this match {
+      case Cons(h, t) => cons(h(), t().take(n  - 1))
+      case _ => this
+    } else empty
+  }
+
+  def drop(n: Int): Stream[A] = this match {
+    case Cons(h, t) if (n > 0) => t().drop(n - 1)
+    case _ => this
+  }
+
+  def takeWhile(p: A => Boolean): Stream[A] = this match {
+    case Cons(h, t) =>
+      if (p(h())) cons(h(), t().takeWhile(p))
+      else empty
+    case _ => this
+  }
+}
+
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
