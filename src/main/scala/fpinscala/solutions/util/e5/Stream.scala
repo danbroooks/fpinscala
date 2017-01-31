@@ -33,6 +33,26 @@ sealed trait Stream[+A] {
     case Cons(h, t) => f(h(), t().foldRight(z)(f))
     case _ => z
   }
+
+  def headOption: Option[A] =
+    foldRight(None: Option[A])((h, _) => Some(h))
+
+  def map[B](f: A => B) =
+    foldRight(empty[B])((h, t) => cons(f(h), t))
+
+  def filter(f: A => Boolean) =
+    foldRight(empty[A])((h, t) => {
+      if (f(h)) cons(h, t)
+      else t
+    })
+
+  def append[B >: A](s: => Stream[B]) =
+    foldRight(s)(cons(_, _))
+
+  def flatMap[B](f: A => Stream[B]) =
+    foldRight(empty[B])((h, t) => {
+      f(h).append(t)
+    })
 }
 
 case object Empty extends Stream[Nothing]

@@ -56,5 +56,54 @@ class e5Spec extends FreeSpec with Matchers {
         Stream(1, 2, 3, 4).forAll(_ == 1) should be (false)
       }
     }
+
+    "headOption" - {
+      "returns head in a Some when head exists" in {
+        Stream(1, 2, 3, 4).headOption should be (Some(1))
+        Stream(1).headOption should be (Some(1))
+      }
+
+      "returns None when stream is empty" in {
+        Stream().headOption should be (None)
+      }
+    }
+
+    "map" - {
+      "should map over all values in the stream" in {
+        Stream(1, 2, 3, 4).map(_ + 1).toList should be (List(2, 3, 4, 5))
+      }
+
+      "should do nothing to an empty stream" in {
+        (Stream(): Stream[Int]).map(_ + 1).toList should be (List())
+      }
+    }
+
+    "filter" - {
+      "should filter out elements in the stream" in {
+        Stream(1, 2, 3, 4).filter(_ < 3).toList should be (List(1, 2))
+      }
+
+      "should do nothing when given an empty stream" in {
+        (Stream(): Stream[Int]).filter(_ < 3).toList should be (List())
+      }
+    }
+
+    "append" - {
+      "should append another stream to the stream" in {
+        Stream(1, 2, 3).append(Stream(4)).toList should be (List(1, 2, 3, 4))
+      }
+
+      "should do nothing with empty streams" in {
+        (Stream(): Stream[Int]).append(Stream(): Stream[Int]).toList should be (List())
+      }
+    }
+
+    "flatMap" - {
+      "should flat map" in {
+        Stream(1, 2, 3, 4).flatMap(n =>
+          if (n > 2) Stream(n, n * 2) else Stream()
+        ).toList should be (List(3, 6, 4, 8))
+      }
+    }
   }
 }
