@@ -105,5 +105,29 @@ class e5Spec extends FreeSpec with Matchers {
         ).toList should be (List(3, 6, 4, 8))
       }
     }
+
+    "constant" - {
+      "creates an infinite stream with a constant value" in {
+        Stream.constant(2).take(5).toList should be (List(2, 2, 2, 2, 2))
+      }
+    }
+
+    "from" - {
+      "creates an infinite stream of Ints incrementing by 1" in {
+        Stream.from(10).take(3).toList should be (List(10, 11, 12))
+      }
+    }
+
+    "fibs" - {
+      "creates an infinite stream of fibonacci numbers" in {
+        Stream.fibs().take(7).toList should be (List(0, 1, 1, 2, 3, 5, 8))
+      }
+    }
+
+    "unfold" - {
+      "should take an initial state and a function for producing the next state and the next value and build a stream from it" in {
+        Stream.unfold(64)(n => Some((n, n / 2))).take(7).toList should be (List(64, 32, 16, 8, 4, 2, 1))
+      }
+    }
   }
 }
