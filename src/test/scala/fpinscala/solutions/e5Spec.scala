@@ -106,6 +106,10 @@ class e5Spec extends FreeSpec with Matchers {
       }
     }
 
+    "ones" - {
+      Stream.ones.take(2).toList should be (List(1, 1))
+    }
+
     "constant" - {
       "creates an infinite stream with a constant value" in {
         Stream.constant(2).take(5).toList should be (List(2, 2, 2, 2, 2))
@@ -120,7 +124,7 @@ class e5Spec extends FreeSpec with Matchers {
 
     "fibs" - {
       "creates an infinite stream of fibonacci numbers" in {
-        Stream.fibs().take(7).toList should be (List(0, 1, 1, 2, 3, 5, 8))
+        Stream.fibs.take(7).toList should be (List(0, 1, 1, 2, 3, 5, 8))
       }
     }
 
