@@ -53,6 +53,19 @@ sealed trait Stream[+A] {
     foldRight(empty[B])((h, t) => {
       f(h).append(t)
     })
+
+  def zipWith[B, C](s: Stream[B])(f: (=> A, => B) => C): Stream[C] = (this, s) match {
+    case (_, Empty) => empty
+    case (Empty, _) => empty
+    case (Cons(x, xs), Cons(y, ys)) => cons(f(x(), y()), xs().zipWith(ys())(f))
+  }
+
+  def zipAll[B](s: Stream[B]): Stream[(Option[A],Option[B])] = (this, s) match {
+    case (Cons(x, xs), Empty) => cons((Some(x()), None), xs().zipAll(empty[B]))
+    case (Empty, Cons(y, ys)) => cons((None, Some(y())), empty[A].zipAll(ys()))
+    case (Cons(x, xs), Cons(y, ys)) => cons((Some(x()), Some(y())), xs().zipAll(ys()))
+    case _ => empty[(Option[A],Option[B])]
+  }
 }
 
 case object Empty extends Stream[Nothing]

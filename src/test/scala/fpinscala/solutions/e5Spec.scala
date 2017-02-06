@@ -133,5 +133,27 @@ class e5Spec extends FreeSpec with Matchers {
         Stream.unfold(64)(n => Some((n, n / 2))).take(7).toList should be (List(64, 32, 16, 8, 4, 2, 1))
       }
     }
+
+    "zipWith" - {
+      "should combine using provided function" in {
+        val firstNames = Stream("Martin", "Paul", "Runar")
+        val lastNames = Stream("Odersky", "Chiusano", "Bjarnason")
+
+        firstNames.zipWith(lastNames)((first, last) => s"$first $last").toList should be (List("Martin Odersky", "Paul Chiusano", "Runar Bjarnason"))
+      }
+    }
+
+    "zipAll" - {
+      "should zip until contents of both stream are exausted" in {
+        val words = Stream("One", "Two", "Three")
+        val numbers = Stream(1, 2)
+
+        words.zipAll(numbers).toList should be (List(
+          (Some("One"), Some(1)),
+          (Some("Two"), Some(2)),
+          (Some("Three"), None)
+        ))
+      }
+    }
   }
 }

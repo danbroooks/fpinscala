@@ -13,7 +13,7 @@ class e3Spec extends FreeSpec with Matchers {
       list.x(numbers) should be (3)
     }
 
-    "take" - {
+    "tail" - {
       "should return the list without the first element of the list" in {
         list.tail(numbers) should be (List(2, 3, 4, 5))
       }
