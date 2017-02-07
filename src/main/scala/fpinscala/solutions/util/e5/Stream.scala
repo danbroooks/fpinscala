@@ -8,12 +8,12 @@ sealed trait Stream[+A] {
     case Cons(h, t) => List(h()) ++ t().toList
   }
 
-  def take(n: Int): Stream[A] = {
-    if (n > 0) this match {
-      case Cons(h, t) => cons(h(), t().take(n  - 1))
-      case _ => this
-    } else empty
-  }
+  def take(n: Int): Stream[A] =
+    unfold((n, this))({
+      case (1, Cons(h, t)) => Some((h(), (0, empty)))
+      case (i, Cons(h, t)) if (i > 0) => Some((h(), (i - 1, t())))
+      case _ => None
+    })
 
   def drop(n: Int): Stream[A] = this match {
     case Cons(h, t) if (n > 0) => t().drop(n - 1)
@@ -21,9 +21,9 @@ sealed trait Stream[+A] {
   }
 
   def takeWhile(p: A => Boolean): Stream[A] =
-    foldRight(empty[A])((h, t) => {
-      if (p(h)) cons(h, t)
-      else empty
+    unfold(this)({
+      case Cons(h, t) if (p(h())) => Some((h(), t()))
+      case _ => None
     })
 
   def forAll(p: A => Boolean): Boolean =
@@ -38,7 +38,10 @@ sealed trait Stream[+A] {
     foldRight(None: Option[A])((h, _) => Some(h))
 
   def map[B](f: A => B) =
-    foldRight(empty[B])((h, t) => cons(f(h), t))
+    unfold(this)({
+      case Cons(h, t) => Some((f(h()), t()))
+      case _ => None
+    })
 
   def filter(f: A => Boolean) =
     foldRight(empty[A])((h, t) => {
@@ -54,18 +57,19 @@ sealed trait Stream[+A] {
       f(h).append(t)
     })
 
-  def zipWith[B, C](s: Stream[B])(f: (=> A, => B) => C): Stream[C] = (this, s) match {
-    case (_, Empty) => empty
-    case (Empty, _) => empty
-    case (Cons(x, xs), Cons(y, ys)) => cons(f(x(), y()), xs().zipWith(ys())(f))
-  }
+  def zipWith[B, C](s: Stream[B])(f: (=> A, => B) => C): Stream[C] =
+    unfold((this, s))({
+      case (Cons(a, as), Cons(b, bs)) => Some((f(a(), b()), (as(), bs())))
+      case _ => None
+    })
 
-  def zipAll[B](s: Stream[B]): Stream[(Option[A],Option[B])] = (this, s) match {
-    case (Cons(x, xs), Empty) => cons((Some(x()), None), xs().zipAll(empty[B]))
-    case (Empty, Cons(y, ys)) => cons((None, Some(y())), empty[A].zipAll(ys()))
-    case (Cons(x, xs), Cons(y, ys)) => cons((Some(x()), Some(y())), xs().zipAll(ys()))
-    case _ => empty[(Option[A],Option[B])]
-  }
+  def zipAll[B](s: Stream[B]): Stream[(Option[A],Option[B])] =
+    unfold((this, s))({
+      case (Cons(a, as), Empty) => Some(((Some(a()), None), (as(), empty[B])))
+      case (Empty, Cons(b, bs)) => Some(((None, Some(b())), (empty[A], bs())))
+      case (Cons(a, as), Cons(b, bs)) => Some(((Some(a()), Some(b())), (as(), bs())))
+      case _ => None
+    })
 }
 
 case object Empty extends Stream[Nothing]
@@ -93,7 +97,7 @@ object Stream {
     unfold(n)(x => Some((x, x + 1)))
 
   def fibs: Stream[Int] =
-    unfold((0, 1))(x => x match {
+    unfold((0, 1))({
       case (curr, next) => Some((curr, (next, curr + next)))
     })
 
