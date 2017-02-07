@@ -155,5 +155,31 @@ class e5Spec extends FreeSpec with Matchers {
         ))
       }
     }
+
+    "startsWith" - {
+      "should return true for stream [1,2,3,4] starting with [1]" in {
+        Stream(1,2,3,4).startsWith(Stream(1)) should be (true)
+      }
+
+      "should return true for stream [1,2,3,4] starting with [1,2]" in {
+        Stream(1,2,3,4).startsWith(Stream(1,2)) should be (true)
+      }
+
+      "should return true for stream [1,2,3,4] starting with [1,2,3]" in {
+        Stream(1,2,3,4).startsWith(Stream(1,2,3)) should be (true)
+      }
+
+      "should return true for stream [1,2,3,4] starting with [1,2,3,4]" in {
+        Stream(1,2,3,4).startsWith(Stream(1,2,3,4)) should be (true)
+      }
+
+      "should return false for stream [1,2,3,4] starting with [1,2,3,4,5]" in {
+        Stream(1,2,3,4).startsWith(Stream(1,2,3,4,5)) should be (false)
+      }
+
+      "should return false for stream [1,2,3,4] starting with [2,3,4]" in {
+        Stream(1,2,3,4).startsWith(Stream(2,3,4)) should be (false)
+      }
+    }
   }
 }

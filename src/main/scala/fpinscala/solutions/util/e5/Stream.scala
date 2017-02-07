@@ -70,6 +70,15 @@ sealed trait Stream[+A] {
       case (Cons(a, as), Cons(b, bs)) => Some(((Some(a()), Some(b())), (as(), bs())))
       case _ => None
     })
+
+  def startsWith[A](s: Stream[A]): Boolean = {
+    zipAll(s).takeWhile({
+      case (_, Some(_)) => true
+      case _ => false
+    }).forAll({
+     case (a, b) => a == b
+    })
+  }
 }
 
 case object Empty extends Stream[Nothing]
