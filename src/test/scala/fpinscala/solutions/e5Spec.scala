@@ -211,5 +211,11 @@ class e5Spec extends FreeSpec with Matchers {
         ))
       }
     }
+
+    "scanRight" - {
+      "returns a stream of intermediate results" in {
+        Stream(1, 2, 3).scanRight(0)(_ + _).toList should be (List(6, 5, 3, 0))
+      }
+    }
   }
 }
