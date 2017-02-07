@@ -181,5 +181,35 @@ class e5Spec extends FreeSpec with Matchers {
         Stream(1,2,3,4).startsWith(Stream(2,3,4)) should be (false)
       }
     }
+
+    "tails" - {
+      "returns a stream of suffixes for stream [], starting with the original stream" in {
+        Stream().tails.toList.map(_.toList) should be (List(List()))
+      }
+
+      "returns a stream of suffixes for stream [1], starting with the original stream" in {
+        Stream(1).tails.toList.map(_.toList) should be (List(
+          List(1),
+          List()
+        ))
+      }
+
+      "returns a stream of suffixes for stream [1,2], starting with the original stream" in {
+        Stream(1,2).tails.toList.map(_.toList) should be (List(
+          List(1,2),
+          List(2),
+          List()
+        ))
+      }
+
+      "returns a stream of suffixes for stream [1,2,3], starting with the original stream" in {
+        Stream(1,2,3).tails.toList.map(_.toList) should be (List(
+          List(1,2,3),
+          List(2,3),
+          List(3),
+          List()
+        ))
+      }
+    }
   }
 }
