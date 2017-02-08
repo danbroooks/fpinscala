@@ -24,6 +24,10 @@ class e5Spec extends FreeSpec with Matchers {
       "returns empty stream when stream is empty" in {
         Stream().take(2).toList should be (List())
       }
+
+      "works with infinite streams" in {
+        Stream.constant(1).take(3).toList should be (List(1, 1, 1))
+      }
     }
 
     "drop" - {
@@ -44,6 +48,10 @@ class e5Spec extends FreeSpec with Matchers {
 
       "returns empty steam when stream is empty" in {
         (Stream(): Stream[Int]).takeWhile(_ < 3).toList should be (List())
+      }
+
+      "works with infinite streams" in {
+        Stream.constant(1).takeWhile(_ == 1).take(3).toList should be (List(1, 1, 1))
       }
     }
 
@@ -76,6 +84,10 @@ class e5Spec extends FreeSpec with Matchers {
       "should do nothing to an empty stream" in {
         (Stream(): Stream[Int]).map(_ + 1).toList should be (List())
       }
+
+      "works with infinite streams" in {
+        Stream.constant(1).map(_ + 2).take(3).toList should be (List(3, 3, 3))
+      }
     }
 
     "filter" - {
@@ -85,6 +97,10 @@ class e5Spec extends FreeSpec with Matchers {
 
       "should do nothing when given an empty stream" in {
         (Stream(): Stream[Int]).filter(_ < 3).toList should be (List())
+      }
+
+      "works with infinite streams" in {
+        Stream.fibs.filter(_ < 200).take(10).toList should be (List(0, 1, 1, 2, 3, 5, 8, 13, 21, 34))
       }
     }
 
