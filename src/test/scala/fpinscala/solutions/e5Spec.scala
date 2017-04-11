@@ -232,6 +232,10 @@ class e5Spec extends FreeSpec with Matchers {
       "returns a stream of intermediate results" in {
         Stream(1, 2, 3).scanRight(0)(_ + _).toList should be (List(6, 5, 3, 0))
       }
+
+      "works with infinite streams" in {
+        Stream.ones.scanRight(0)(_ + _).take(1).toList should be (List(6, 5, 3, 0))
+      }
     }
   }
 }

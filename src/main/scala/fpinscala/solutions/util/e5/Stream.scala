@@ -87,7 +87,12 @@ sealed trait Stream[+A] {
     }) append Stream(empty)
 
   def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] =
-    tails.foldRight(empty[B])((next, curr) => cons(next.foldRight(z)(f), curr))
+    foldRight((z, Stream(z)))((a, p0) => {
+      // p0 is passed by-name and used in by-name args in f and cons. So use lazy val to ensure only one evaluation...
+      lazy val p1 = p0
+      val b2 = f(a, p1._1)
+      (b2, cons(b2, p1._2))
+    })._2
 }
 
 case object Empty extends Stream[Nothing]
