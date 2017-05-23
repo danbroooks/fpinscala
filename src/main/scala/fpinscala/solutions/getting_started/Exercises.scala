@@ -1,8 +1,10 @@
-package fpinscala.solutions
+package fpinscala
+package solutions
+package getting_started
 
 import annotation.tailrec
 
-object e2 {
+object Exercises {
 
   @tailrec def fib(n: Int, prev: Int = 0, acc: Int = 1): Int = n match {
     case 0 => n

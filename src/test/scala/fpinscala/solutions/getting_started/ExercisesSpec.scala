@@ -1,9 +1,11 @@
-package fpinscala.solutions
+package fpinscala
+package solutions
+package getting_started
 
-import e2._
+import Exercises._
 import org.scalatest._
 
-class e2Spec extends FreeSpec with Matchers {
+class ExercisesSpec extends FreeSpec with Matchers {
   "fib" - {
     "first fibonacci number should be 0" in {
       fib(0) should be (0)
