@@ -1,8 +1,10 @@
-package fpinscala.solutions.util.e5
-
-import Stream._
+package fpinscala
+package solutions
+package laziness
 
 sealed trait Stream[+A] {
+  import Stream._
+
   def toList: List[A] = this match {
     case Empty => Nil
     case Cons(h, t) => List(h()) ++ t().toList
