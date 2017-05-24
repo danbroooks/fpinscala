@@ -1,4 +1,6 @@
-package fpinscala.solutions.util.e4
+package fpinscala
+package solutions
+package error_handling
 
 sealed trait Either[+E, +A] {
   def map[B](f: A => B): Either[E, B] = this match {

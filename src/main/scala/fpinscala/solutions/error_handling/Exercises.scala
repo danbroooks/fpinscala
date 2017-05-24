@@ -1,8 +1,8 @@
-package fpinscala.solutions
+package fpinscala
+package solutions
+package error_handling
 
-import util.e4._
-
-object e4 {
+object Exercises {
 
   def variance(xs: Seq[Double]): Option[Double] = {
     mean(xs).flatMap(m => {

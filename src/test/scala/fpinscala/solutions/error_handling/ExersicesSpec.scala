@@ -1,10 +1,11 @@
-package fpinscala.solutions
+package fpinscala
+package solutions
+package error_handling
 
-import e4._
-import util.e4._
+import Exercises._
 import org.scalatest._
 
-class e4Spec extends FreeSpec with Matchers {
+class ExercisesSpec extends FreeSpec with Matchers {
   "option" - {
     "map" - {
       "should map over value encapsulated by some" in {

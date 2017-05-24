@@ -1,4 +1,6 @@
-package fpinscala.solutions.util.e4
+package fpinscala
+package solutions
+package error_handling
 
 sealed trait Option[+A] {
   def map[B](f: A => B): Option[B] = this match {
