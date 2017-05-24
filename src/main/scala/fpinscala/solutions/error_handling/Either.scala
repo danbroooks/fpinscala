@@ -2,6 +2,12 @@ package fpinscala
 package solutions
 package error_handling
 
+/**
+ * Exercise 4.6
+ *
+ * Implement versions of map, flatMap, orElse, and map2 on Either
+ * that operate on the Right value
+ */
 sealed trait Either[+E, +A] {
   def map[B](f: A => B): Either[E, B] = this match {
     case Right(x) => Right(f(x))
@@ -27,6 +33,12 @@ object Either {
     try Right(a)
     catch { case e: Exception => Left(e) }
 
+  /**
+   * Exercise 4.7
+   *
+   * Implement sequence and traverse for Either. These should return
+   * the first error that’s encountered, if there is one.
+   */
   def sequence[E,A](es: List[Either[E,A]]): Either[E, List[A]] =
     traverse(es)(x => x)
 
