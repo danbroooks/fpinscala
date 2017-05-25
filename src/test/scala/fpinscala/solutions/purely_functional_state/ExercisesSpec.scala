@@ -24,4 +24,25 @@ class ExercisesSpec extends FreeSpec with Matchers {
       double(generator) should be(0.016124640125781298,SimpleRNG(2269341352541L))
     }
   }
+
+  "intDouble" - {
+    "generates an int then a double" in {
+      val generator = SimpleRNG(90)
+      intDouble(generator) should be((34627401,0.4238283708691597),SimpleRNG(221826436403108L))
+    }
+  }
+
+  "doubleInt" - {
+    "generates a double then an int" in {
+      val generator = SimpleRNG(90)
+      doubleInt(generator) should be((0.016124640125781298,-910164495),SimpleRNG(221826436403108L))
+    }
+  }
+
+  "double3" - {
+    "generates a double then an int" in {
+      val generator = SimpleRNG(90)
+      double3(generator) should be((0.016124640125781298,0.4238283708691597,0.4347293274477124),SimpleRNG(220292263149791L))
+    }
+  }
 }

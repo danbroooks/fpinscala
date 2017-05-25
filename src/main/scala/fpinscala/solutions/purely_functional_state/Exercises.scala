@@ -26,5 +26,30 @@ object Exercises {
      val (n, next) = nonNegativeInt(rng)
      (n / (Int.MaxValue.toDouble + 1), next)
    }
+
+  /**
+   * Exercise 6.3
+   *
+   * Write functions to generate an (Int, Double) pair, a (Double, Int) pair,
+   * and a (Double, Double, Double) 3-tuple.
+   */
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (int, next1) = rng.nextInt
+    val (dub, next2) = double(next1)
+    ((int, dub), next2)
+  }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val (dub, next1) = double(rng)
+    val (int, next2) = next1.nextInt
+    ((dub, int), next2)
+  }
+
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (dub1, next1) = double(rng)
+    val (dub2, next2) = double(next1)
+    val (dub3, next3) = double(next2)
+    ((dub1, dub2, dub3), next3)
+  }
 }
 
