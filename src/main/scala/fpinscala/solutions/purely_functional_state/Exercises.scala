@@ -51,5 +51,18 @@ object Exercises {
     val (dub3, next3) = double(next2)
     ((dub1, dub2, dub3), next3)
   }
+
+  /**
+   * Exercise 6.4
+   *
+   * Write a function to generate a list of random integers.
+   */
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) =
+    List.fill(count)(())
+      .foldRight((List(): List[Int], rng))((_, r) => {
+        val (xs, rg) = r
+        val (int, next) = nonNegativeInt(rg)
+        (xs ++ List(int), next)
+      });
 }
 
