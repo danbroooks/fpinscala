@@ -57,12 +57,13 @@ object Exercises {
    *
    * Write a function to generate a list of random integers.
    */
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) =
-    List.fill(count)(())
-      .foldRight((List(): List[Int], rng))((_, r) => {
-        val (xs, rg) = r
-        val (int, next) = nonNegativeInt(rg)
-        (xs ++ List(int), next)
-      });
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    if (count < 1) (List(), rng)
+    else {
+      val (i, rec) = nonNegativeInt(rng)
+      val (xs, next) = ints(count - 1)(rec)
+      (i :: xs, next)
+    }
+  }
 }
 
