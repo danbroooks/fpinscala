@@ -60,7 +60,7 @@ object Exercises {
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
     if (count < 1) (List(), rng)
     else {
-      val (i, rec) = nonNegativeInt(rng)
+      val (i, rec) = rng.nextInt
       val (xs, next) = ints(count - 1)(rec)
       (i :: xs, next)
     }

@@ -49,7 +49,7 @@ class ExercisesSpec extends FreeSpec with Matchers {
   "ints" - {
     "generates a double then an int" in {
       val generator = SimpleRNG(90)
-      ints(2)(generator) should be(List(34627401,910164496),SimpleRNG(221826436403108L))
+      ints(2)(generator) should be(List(34627401,-910164495),SimpleRNG(221826436403108L))
     }
   }
 }
