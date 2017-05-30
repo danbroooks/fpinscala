@@ -21,11 +21,14 @@ object Exercises {
    * Exercise 6.2
    *
    * Write a function to generate a Double between 0 and 1, not including 1.
+   *
+   * Exercise 6.5
+   *
+   * Use map to reimplement double in a more elegant way.
    */
-   def double(rng: RNG): (Double, RNG) = {
-     val (n, next) = nonNegativeInt(rng)
-     (n / (Int.MaxValue.toDouble + 1), next)
-   }
+  def double(rng: RNG): (Double, RNG) = {
+    RNG.map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))(rng)
+  }
 
   /**
    * Exercise 6.3

@@ -3,6 +3,7 @@ package solutions
 package purely_functional_state
 
 import Exercises._
+import RNG.SimpleRNG
 import org.scalatest._
 
 class ExercisesSpec extends FreeSpec with Matchers {
