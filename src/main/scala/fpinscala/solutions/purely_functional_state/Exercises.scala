@@ -2,6 +2,8 @@ package fpinscala
 package solutions
 package purely_functional_state
 
+import RNG.Rand
+
 object Exercises {
 
   /**
@@ -59,14 +61,11 @@ object Exercises {
    * Exercise 6.4
    *
    * Write a function to generate a list of random integers.
+   *
+   * Exercise 6.7
+   *
+   * Use sequence to reimplement the ints.
    */
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
-    if (count < 1) (List(), rng)
-    else {
-      val (i, rec) = rng.nextInt
-      val (xs, next) = ints(count - 1)(rec)
-      (i :: xs, next)
-    }
-  }
+  def ints(n: Int): Rand[List[Int]] =
+    RNG.sequence(List.fill(n)(RNG.int))
 }
-

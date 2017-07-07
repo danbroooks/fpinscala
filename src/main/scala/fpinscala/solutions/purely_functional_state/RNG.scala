@@ -43,4 +43,17 @@ object RNG {
       val (b, rng3) = rb(rng2)
       (f(a, b), rng3)
     }
+
+  /**
+   * Exercise 6.7
+   *
+   * If you can combine two RNG transitions, you should be able to combine a
+   * whole list of them. Implement sequence for combining a List of transitions
+   * into a single transition.
+   */
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng =>
+    fs match {
+      case head :: tail => map2(head, sequence(tail))(_ :: _)(rng)
+      case _ => (List(), rng)
+    }
 }
